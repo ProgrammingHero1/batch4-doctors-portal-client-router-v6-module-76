@@ -5,11 +5,19 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import StaticDatePicker from '@mui/lab/StaticDatePicker';
 
-const Calendar = () => {
-    return (
-        <div>
+const Calendar = ({ date, setDate }) => {
 
-        </div>
+    return (
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <StaticDatePicker
+                displayStaticWrapperAs="desktop"
+                value={date}
+                onChange={(newValue) => {
+                    setDate(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+            />
+        </LocalizationProvider>
     );
 };
 
