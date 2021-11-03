@@ -33,7 +33,7 @@ Step 4: create auth context hook (useAuth)
 1. create a auth context
 2. Create context Provider
 3. set context Provider context value
-4. use Auth Provider
+4. use Auth Provider in the app.js
 5. create useAuth Hook
 ---------------------
 Step 5: create private route
