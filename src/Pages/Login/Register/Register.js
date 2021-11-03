@@ -1,4 +1,4 @@
-import { Container, Typography, TextField, Button, CircularProgress } from '@mui/material';
+import { Container, Typography, TextField, Button, CircularProgress, Alert } from '@mui/material';
 import React, { useState } from 'react';
 import { Grid } from '@mui/material';
 import login from '../../../images/login.png'
@@ -8,7 +8,7 @@ import useAuth from './../../../hooks/useAuth';
 const Register = () => {
     const [loginData, setLoginData] = useState({});
 
-    const { registerUser, isLoading } = useAuth();
+    const { user, registerUser, isLoading, authError } = useAuth();
 
     const handleOnChange = e => {
         const field = e.target.name;
@@ -64,6 +64,8 @@ const Register = () => {
                         </NavLink>
                     </form>}
                     {isLoading && <CircularProgress />}
+                    {user?.email && <Alert severity="success">User Created successfully!</Alert>}
+                    {authError && <Alert severity="error">{authError}</Alert>}
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <img style={{ width: '100%' }} src={login} alt="" />
