@@ -18,12 +18,15 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Calendar from '../../Shared/Calendar/Calendar';
 import Appointments from '../Appointments/Appointments';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [date, setDate] = React.useState(new Date())
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -33,6 +36,7 @@ function Dashboard(props) {
         <div>
             <Toolbar />
             <Divider />
+            <Link to="/appointment"><Button color="inherit">Appointment</Button></Link>
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
@@ -112,10 +116,13 @@ function Dashboard(props) {
                 <Typography paragraph>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={5}>
-                            <Calendar></Calendar>
+                            <Calendar
+                                date={date}
+                                setDate={setDate}
+                            ></Calendar>
                         </Grid>
                         <Grid item xs={12} sm={7}>
-                            <Appointments></Appointments>
+                            <Appointments date={date}></Appointments>
                         </Grid>
                     </Grid>
                 </Typography>
