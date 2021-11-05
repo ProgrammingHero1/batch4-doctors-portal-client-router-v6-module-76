@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,28 +16,35 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     Link,
-    useParams,
     useRouteMatch
 } from "react-router-dom";
 import { Button } from '@mui/material';
 import DashboardHome from '../DashboardHome/DashboardHome';
 import MakeAdmin from '../MakeAdmin/MakeAdmin';
 import AddDoctor from '../AddDoctor/AddDoctor';
+import useAuth from './../../../hooks/useAuth';
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const { user } = useAuth()
+    const [admin, setAdmin] = useState(false);
 
     let { path, url } = useRouteMatch();
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/users/${user.email}`)
+            .then(res => res.json())
+            .then(data => setAdmin(data.admin));
+    }, [])
 
     const drawer = (
         <div>
@@ -45,8 +52,10 @@ function Dashboard(props) {
             <Divider />
             <Link to="/appointment"><Button color="inherit">Appointment</Button></Link>
             <Link to={`${url}`}><Button color="inherit">Dashboard</Button></Link>
-            <Link to={`${url}/makeAdmin`}><Button color="inherit">Make Admin</Button></Link>
-            <Link to={`${url}/addDoctor`}><Button color="inherit">Add Doctor</Button></Link>
+            {admin && <Box>
+                <Link to={`${url}/makeAdmin`}><Button color="inherit">Make Admin</Button></Link>
+                <Link to={`${url}/addDoctor`}><Button color="inherit">Add Doctor</Button></Link>
+            </Box>}
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
