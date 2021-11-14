@@ -19,11 +19,11 @@ const Payment = () => {
         <div>
             <h2>Please Pay for: {appointment.patientName} for {appointment.serviceName}</h2>
             <h4>Pay: ${appointment.price}</h4>
-            <Elements stripe={stripePromise}>
+            {appointment?.price && <Elements stripe={stripePromise}>
                 <CheckoutForm
                     appointment={appointment}
                 />
-            </Elements>
+            </Elements>}
         </div>
     );
 };
@@ -37,5 +37,8 @@ export default Payment;
 4. Checkout Form
 -----
 5. Create payment method
-
+6. server: create payment Intent api
+7. Load client secret
+8. ConfirmCard payment
+9. handle user error
 */
